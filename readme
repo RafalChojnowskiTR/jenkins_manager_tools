@@ -1,0 +1,41 @@
+Before using the tools:
+0. Install Python 3
+1. Check your Chrome browser version. Update Chrome if needed.
+2. Download proper chromedriver according to your Chrome version (https://chromedriver.chromium.org/downloads)
+3. Copy chromedriver executable in main folder
+
+
+In case of an error like:
+“chromedriver” cannot be opened because the developer cannot be verified". "macOS cannot verify that this app is free from malware.":
+1. Open terminal
+2. Navigate to path where your chromedriver file is located
+3. Execute:
+    xattr -d com.apple.quarantine chromedriver
+
+
+
+TOOLS USAGE:
+
+0) Go to JenkinsCredentialsManager.py and provide credentials that you use to enter Jenkins for QA and PPE envs
+
+Using the RunJenkinsJobs.py:
+    1a) Uncomment lines 92 & 93 in RunJenkinsJobs.py and comment all the other lines at the end of the file.
+    2a) Execute in CMD: RunJenkinsJobs.py -e <environment[qa/ppe]> -t <type[reg/smk]> -g <group[agws/core]>
+
+    1b) Comment lines 92 & 93 in RunJenkinsJobs.py and uncomment lines that you need at the end of the file, e.g.:
+            env, test_type, test_group = "qa", "reg", "file"
+            run(env, test_type, test_group)
+        This will run all the jobs in QA regression that contain phrase "file" in its name
+    2b) Run RunJenkinsJobs.py from CMD or IDE without additional parameters
+
+Using RunJenkinsSourceJobs.py:
+    1) Edit line 24 - change env variable to either "qa" of "ppe" - depending on which env source jobs you want to trigger
+    2) Run RunJenkinsSourceJobs.py from CMD or IDE without additional parameters
+
+Using GetTestResults.py:
+    1) Edit lines 10 & 11:
+            env = "qa"
+            test_type = "reg"
+       Depending on which env and test type results you want to get
+    2) Run GetTestResults.py from CMD or IDE without additional parameters
+    3) This tool will print out job links, names of failed test cases and their age (since how many runs has a test case been failing)
